@@ -1,9 +1,16 @@
-// const LPToken = artifacts.require("LPToken");
-// const UnderlyingToken = artifacts.require("UnderlyingToken");
-// const LiquitidyPool = artifacts.require("LiquitidyPool");
+const Token = artifacts.require("Token");
+// const Factory = artifacts.require("Factory");
+// const Exchange = artifacts.require("Exchange");
 
 module.exports = function (deployer) {
-    // deployer.deploy(LPToken);
-    // deployer.deploy(UnderlyingToken);
-    // deployer.deploy(LiquitidyPool);
+
+    // deployer.deploy(Token, "Ramona", "MONA", 10000000000000000000000)
+    deployer.deploy(Token, "Ramona", "MONA", 100)
+
+    // deployer.deploy(Token("Ramona token", "MONA", 10000000000000000000000)).then(function () {
+    // deployer.deploy(Factory.Token.address).then(function () {
+    // deployer.deploy(Exchange, Token.deployed().address)
+    //     })
+    // })
+
 };
