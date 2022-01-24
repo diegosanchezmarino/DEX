@@ -1,0 +1,14 @@
+# Created by https://www.toptal.com/developers/gitignore/api/soliditytruffle
+# Edit at https://www.toptal.com/developers/gitignore?templates=soliditytruffle
+
+### SolidityTruffle ###
+# depedencies
+node_modules/
+node_modules
+./reactApp/node_modules
+
+#abis
+abis
+abis/
+
+# End of https://www.toptal.com/developers/gitignore/api/soliditytruffle
