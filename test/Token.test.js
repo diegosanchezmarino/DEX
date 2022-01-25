@@ -35,11 +35,16 @@ contract('Token', ([deployer]) => {
 
         it("mints initialSupply to msg.sender when created", async () => {
 
-            const totalSupply = await token.totalSupply()
-            const deployerBalance = await token.balanceOf(deployer)
+            const expectedSupply = 1000000000000000000;
 
-            assert.equal(totalSupply, 100)
-            assert.equal(deployerBalance, 100)
+            let totalSupply = await token.totalSupply()
+            totalSupply = new web3.utils.BN(totalSupply)
+
+            let deployerBalance = await token.balanceOf(deployer)
+            deployerBalance = new web3.utils.BN(deployerBalance)
+
+            assert.equal(totalSupply.toString(), expectedSupply.toString())
+            assert.equal(deployerBalance.toString(), expectedSupply.toString())
         });
     })
 

@@ -3,11 +3,17 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract Token is ERC20 {
-    constructor(
-        string memory name,
-        string memory symbol,
-        uint256 initialSupply
-    ) ERC20(name, symbol) {
-        _mint(msg.sender, initialSupply);
+    // modify token name
+    string public constant NAME = "Ramona";
+    // modify token symbol
+    string public constant SYMBOL = "MONA";
+    // modify token decimals
+    uint8 public constant DECIMALS = 18;
+    // modify initial token supply
+    // uint256 public constant INITIAL_SUPPLY = 10000 * (10**uint256(DECIMALS)); // 10000 tokens
+    uint256 public constant INITIAL_SUPPLY = 1000000000000000000;
+
+    constructor() ERC20(NAME, SYMBOL) {
+        _mint(msg.sender, INITIAL_SUPPLY);
     }
 }
