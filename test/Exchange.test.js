@@ -1,6 +1,29 @@
 // const { assert } = require('chai')
 // const { default: Web3 } = require('web3')
 
+// const Factory = artifacts.require('./Factory.sol')
+// const Token = artifacts.require('./Token.sol')
+// const Exchange = artifacts.require('./Exchange.sol')
+
+
+
+// require('chai')
+//     .use(require('chai-as-promised'))
+//     .should()
+
+// contract('Factory', ([deployer]) => {
+
+
+
+
+// })
+
+
+
+
+// const { assert } = require('chai')
+// const { default: Web3 } = require('web3')
+
 // const Exchange = artifacts.require('./Exchange.sol')
 // const Token = artifacts.require('./Token.sol')
 
