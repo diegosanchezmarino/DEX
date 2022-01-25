@@ -6,6 +6,8 @@ import "./Exchange.sol";
 contract Factory {
     mapping(address => address) public tokenToExchange;
 
+    event ExchangeCreated(address tokenAddress, address exchangeAddress);
+
     function createExchange(address _tokenAddress) public returns (address) {
         require(_tokenAddress != address(0), "invalid token address");
         require(
@@ -15,6 +17,8 @@ contract Factory {
 
         Exchange exchange = new Exchange(_tokenAddress);
         tokenToExchange[_tokenAddress] = address(exchange);
+
+        emit ExchangeCreated(_tokenAddress, address(exchange));
 
         return address(exchange);
     }

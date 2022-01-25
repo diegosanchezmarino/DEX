@@ -15,7 +15,7 @@ contract('Token', ([deployer]) => {
     })
 
 
-    describe('Deployment', async () => {
+    describe('deployment', async () => {
 
         it('deploys successfully', async () => {
             const address = await token.address

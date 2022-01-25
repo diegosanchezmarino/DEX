@@ -1,72 +1,80 @@
-// require("@nomiclabs/hardhat-waffle");
-// const { expect } = require("chai");
+const { assert } = require('chai')
+const { default: Web3 } = require('web3')
 
-// const toWei = (value) => ethers.utils.parseEther(value.toString());
+const Factory = artifacts.require('./Factory.sol')
+const Token = artifacts.require('./Token.sol')
 
-// describe("Factory", () => {
-//     let owner;
-//     let factory;
-//     let token;
 
-//     beforeEach(async () => {
-//         [owner] = await ethers.getSigners();
 
-//         const Token = await ethers.getContractFactory("Token");
-//         token = await Token.deploy("Token", "TKN", toWei(1000000));
-//         await token.deployed();
 
-//         const Factory = await ethers.getContractFactory("Factory");
-//         factory = await Factory.deploy();
-//         await factory.deployed();
-//     });
+require('chai')
+    .use(require('chai-as-promised'))
+    .should()
 
-//     it("is deployed", async () => {
-//         expect(await factory.deployed()).to.equal(factory);
-//     });
+contract('Factory', ([deployer]) => {
+    let factory, token, createExchangeResult, createExchangeEvent, getExchangeResult, tokenToExchangeResult
 
-//     describe("createExchange", () => {
-//         it("deploys an exchange", async () => {
-//             const exchangeAddress = await factory.callStatic.createExchange(
-//                 token.address
-//             );
-//             await factory.createExchange(token.address);
+    before(async () => {
+        factory = await Factory.deployed()
+        token = await Token.deployed()
+        createExchangeResult = await factory.createExchange(token.address);
+        createExchangeEvent = createExchangeResult.logs[0].args
+        getExchangeResult = await factory.getExchange(token.address);
+        tokenToExchangeResult = await factory.tokenToExchange(token.address);
 
-//             expect(await factory.tokenToExchange(token.address)).to.equal(
-//                 exchangeAddress
-//             );
+    })
 
-//             const Exchange = await ethers.getContractFactory("Exchange");
-//             const exchange = await Exchange.attach(exchangeAddress);
-//             expect(await exchange.name()).to.equal("Zuniswap-V1");
-//             expect(await exchange.symbol()).to.equal("ZUNI-V1");
-//             expect(await exchange.factoryAddress()).to.equal(factory.address);
-//         });
 
-//         it("doesn't allow zero address", async () => {
-//             await expect(
-//                 factory.createExchange("0x0000000000000000000000000000000000000000")
-//             ).to.be.revertedWith("invalid token address");
-//         });
+    describe('deployment', async () => {
 
-//         it("fails when exchange exists", async () => {
-//             await factory.createExchange(token.address);
+        it('deploys successfully', async () => {
+            const address = await factory.address
+            assert.notEqual(address, 0x0)
+            assert.notEqual(address, '')
+            assert.notEqual(address, null)
+            assert.notEqual(address, undefined)
+        })
+    })
 
-//             await expect(factory.createExchange(token.address)).to.be.revertedWith(
-//                 "exchange already exists"
-//             );
-//         });
-//     });
+    describe("createExchange", () => {
 
-//     describe("getExchange", () => {
-//         it("returns exchange address by token address", async () => {
-//             const exchangeAddress = await factory.callStatic.createExchange(
-//                 token.address
-//             );
-//             await factory.createExchange(token.address);
+        it("deploys an exchange", async () => {
 
-//             expect(await factory.getExchange(token.address)).to.equal(
-//                 exchangeAddress
-//             );
-//         });
-//     });
-// });
+            assert.equal(createExchangeEvent.exchangeAddress, getExchangeResult, "Exchange address doesn't match stored in contract")
+            assert.equal(createExchangeEvent.tokenAddress, token.address, "ExchangeToken address doesn't match stored in contract")
+
+        });
+
+
+        it("doesn't allow zero address", async () => {
+            await factory.createExchange("0x0000000000000000000000000000000000000000").should.be.rejected;
+        });
+
+        it("fails when exchange exists", async () => {
+            await factory.createExchange(token.address).should.be.rejected;
+        });
+    })
+
+    describe("getExchange", () => {
+
+
+        it("returns exchange address", async () => {
+
+            assert.equal(createExchangeEvent.exchangeAddress, getExchangeResult)
+        });
+
+        it("match value stored in contract", async () => {
+
+            assert.equal(tokenToExchangeResult, getExchangeResult)
+        });
+
+        it("returns 0x0 address for non-existent exchanges", async () => {
+
+            const result = await factory.getExchange("0x0000000000000000000000000000000000000000");
+
+            assert.equal(result, "0x0000000000000000000000000000000000000000", "Exchange address should be 0x0000000000000000000000000000000000000000")
+        });
+
+    })
+
+})
