@@ -25,7 +25,6 @@
 
 module.exports = {
 
-
   networks: {
     develop: {
       host: "127.0.0.1",

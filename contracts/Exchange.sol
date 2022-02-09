@@ -7,7 +7,9 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 contract Exchange is ERC20 {
     address public tokenAddress;
 
-    constructor(address _token) ERC20("Zuniswap-V1", "ZUNI-V1") {
+    event LiquidityAdded(uint256 sender, uint256 supply, uint256 reserve);
+
+    constructor(address _token) ERC20("MyExchange", "MEX") {
         require(_token != address(0), "invalid token address");
 
         tokenAddress = _token;
@@ -25,6 +27,8 @@ contract Exchange is ERC20 {
             uint256 liquidity = address(this).balance;
             _mint(msg.sender, liquidity);
 
+            // emit LiquidityAdded(msg.sender, _tokenAmount, msg.value, liquidity);
+
             return liquidity;
         } else {
             uint256 ethReserve = address(this).balance - msg.value;
@@ -36,6 +40,9 @@ contract Exchange is ERC20 {
             token.transferFrom(msg.sender, address(this), tokenAmount);
 
             uint256 liquidity = (msg.value * totalSupply()) / ethReserve;
+
+            emit LiquidityAdded(msg.value, totalSupply(), ethReserve);
+
             _mint(msg.sender, liquidity);
 
             return liquidity;
@@ -47,6 +54,8 @@ contract Exchange is ERC20 {
         returns (uint256, uint256)
     {
         require(_amount > 0, "invalid amount");
+        uint256 tokensAvailable = balanceOf(msg.sender);
+        require(tokensAvailable >= _amount, "not enough tokens");
 
         uint256 ethAmount = (address(this).balance * _amount) / totalSupply();
         uint256 tokenAmount = (getReserve() * _amount) / totalSupply();
@@ -79,6 +88,8 @@ contract Exchange is ERC20 {
     }
 
     function ethToTokenSwap(uint256 _minTokens) public payable {
+        require(msg.value > 0, "not enough ether");
+
         uint256 tokenReserve = getReserve();
         uint256 tokensBought = getAmount(
             msg.value,
@@ -92,6 +103,12 @@ contract Exchange is ERC20 {
     }
 
     function tokenToEthSwap(uint256 _tokensSold, uint256 _minEth) public {
+        uint256 userBalance = IERC20(tokenAddress).balanceOf(msg.sender);
+        require(
+            _tokensSold > 0 && userBalance > 0 && userBalance >= _tokensSold,
+            "not enough tokens"
+        );
+
         uint256 tokenReserve = getReserve();
         uint256 ethBought = getAmount(
             _tokensSold,
@@ -113,7 +130,7 @@ contract Exchange is ERC20 {
         uint256 inputAmount,
         uint256 inputReserve,
         uint256 outputReserve
-    ) private pure returns (uint256) {
+    ) public pure returns (uint256) {
         require(inputReserve > 0 && outputReserve > 0, "invalid reserves");
 
         uint256 inputAmountWithFee = inputAmount * 99;
