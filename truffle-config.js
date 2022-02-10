@@ -1,5 +1,5 @@
 
-import { ROPSTEN_PRIVATE_KEY, INFURA_API_KEY, MNENOMIC } from './secrets'
+// import { ROPSTEN_PRIVATE_KEY, INFURA_API_KEY, MNENOMIC } from './secrets'
 
 
 module.exports = {
