@@ -1,5 +1,6 @@
 import detectEthereumProvider from '@metamask/detect-provider';
-import { DecentragramContractAddress, ChainId, ChainIdHexa } from './Constants'
+import { EnvValues } from './Constants'
+
 import { MetamaskStatus } from '../App'
 
 export class BlockchainConnectionManager {
@@ -34,7 +35,7 @@ export class BlockchainConnectionManager {
         await window.ethereum.request({ method: 'eth_chainId' }).then((result) => {
             const chainIdDecimal = parseInt(result, 16);
             console.log("Current chain id: " + result + " (" + chainIdDecimal + ")")
-            if (chainIdDecimal !== ChainId) {
+            if (chainIdDecimal !== EnvValues.chainId) {
                 this.updateState({ metamaskStatus: MetamaskStatus.WrongNetwork })
             }
             else {
@@ -47,7 +48,7 @@ export class BlockchainConnectionManager {
         window.ethereum.on('chainChanged', (result) => {
             const chainIdDecimal = parseInt(result, 16);
             console.log("Chain changed, new chain id: " + chainIdDecimal)
-            if (chainIdDecimal === ChainId) {
+            if (chainIdDecimal === EnvValues.chainId) {
                 this.checkConnection()
             }
             else {
@@ -121,7 +122,7 @@ export async function switchNetwork() {
     try {
         await window.ethereum.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: ChainIdHexa }], // chainId must be in hexadecimal numbers
+            params: [{ chainId: EnvValues.chainIdHexa }], // chainId must be in hexadecimal numbers
         }).then((result) => {
             console.log(result)
         }).catch((err) => {
