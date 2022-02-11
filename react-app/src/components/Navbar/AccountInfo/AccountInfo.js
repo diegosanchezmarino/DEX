@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react';
+import React from 'react';
 import { AddressBox, StyledAccountInfo } from './AccountInfo.styled';
 import { MetamaskStatus } from '../../../App';
 
@@ -7,7 +7,6 @@ import { MetamaskStatus } from '../../../App';
 export function AccountInfo(props) {
 
     if (props.state.metamaskStatus === MetamaskStatus.Ready) {
-        console.log(props.state)
         return (
             <StyledAccountInfo>
                 <AddressBox >

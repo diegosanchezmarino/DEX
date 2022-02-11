@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react';
-import { RightStack, StyledNavbar } from './Navbar.styled';
-import { MetamaskStatus } from '../../App';
+import { StyledNavbar } from './Navbar.styled';
 import { MainButton } from './MainButton/MainButton.js';
 import { AccountInfo } from './AccountInfo/AccountInfo.js'
 

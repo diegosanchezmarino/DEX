@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react';
+import React from 'react';
 import { StyledMainButton } from './MainButton.styled';
 import { MetamaskStatus } from '../../../App';
 import { connectWallet, switchNetwork } from '../../../utilities/BlockchainConnectionManager'

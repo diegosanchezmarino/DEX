@@ -8,7 +8,7 @@ class TradeView extends Component {
     render() {
         return (
             <StyledTradeView>
-                <SwapBox />
+                <SwapBox state={this.props.state} />
             </StyledTradeView>
         );
     }

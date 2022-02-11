@@ -7,7 +7,7 @@ require('chai')
     .use(require('chai-as-promised'))
     .should()
 
-contract('Token', ([deployer]) => {
+contract('Token', ([deployer, user]) => {
     let token
 
     before(async () => {
@@ -32,20 +32,47 @@ contract('Token', ([deployer]) => {
             assert.equal(name, "Ramona")
             assert.equal(symbol, "MONA")
         });
+    })
 
-        it("mints initialSupply to msg.sender when created", async () => {
+    describe.only('getToken', async () => {
 
-            const expectedSupply = 1000000000000000000;
+        let totalSupply, userBalance, updatedTotalSupply, updatedUserBalance
+        const tokenToGet = 10000;
 
-            let totalSupply = await token.totalSupply()
+        before(async () => {
+
+
+            totalSupply = await token.totalSupply()
             totalSupply = new web3.utils.BN(totalSupply)
 
-            let deployerBalance = await token.balanceOf(deployer)
-            deployerBalance = new web3.utils.BN(deployerBalance)
+            userBalance = await token.balanceOf(user)
+            userBalance = new web3.utils.BN(userBalance)
 
-            assert.equal(totalSupply.toString(), expectedSupply.toString())
-            assert.equal(deployerBalance.toString(), expectedSupply.toString())
+            await token.getToken(tokenToGet, { from: user })
+
+            updatedTotalSupply = await token.totalSupply()
+            updatedTotalSupply = new web3.utils.BN(updatedTotalSupply)
+
+            updatedUserBalance = await token.balanceOf(user)
+            updatedUserBalance = new web3.utils.BN(updatedUserBalance)
+
+        })
+
+
+        it("user gets expected tokens", async () => {
+
+            assert.equal(userBalance.toString(), "0")
+
+            assert.equal(updatedUserBalance.toString(), tokenToGet.toString())
         });
+
+        it("supply gets updated", async () => {
+
+            assert.equal(totalSupply.toString(), "0")
+
+            assert.equal(updatedTotalSupply.toString(), tokenToGet.toString())
+        });
+
     })
 
 })

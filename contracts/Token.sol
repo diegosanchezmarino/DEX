@@ -13,7 +13,9 @@ contract Token is ERC20 {
     // uint256 public constant INITIAL_SUPPLY = 10000 * (10**uint256(DECIMALS)); // 10000 tokens
     uint256 public constant INITIAL_SUPPLY = 1000000000000000000;
 
-    constructor() ERC20(NAME, SYMBOL) {
-        _mint(msg.sender, INITIAL_SUPPLY);
+    constructor() ERC20(NAME, SYMBOL) {}
+
+    function getToken(uint256 _amount) public {
+        _mint(msg.sender, _amount);
     }
 }

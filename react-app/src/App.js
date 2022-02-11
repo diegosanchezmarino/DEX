@@ -5,6 +5,8 @@ import TradeView from './components/TradeView/TradeView';
 import { StyledApp } from './App.styled';
 import Navbar from './components/Navbar/Navbar';
 import { BlockchainConnectionManager } from './utilities/BlockchainConnectionManager';
+import dogeCoin from './assets/dogecoin.jpeg'
+
 
 export const MetamaskStatus = {
   Idle: 0,
@@ -22,7 +24,16 @@ class App extends Component {
     this.state = {
       account: '',
       metamaskStatus: MetamaskStatus.Idle,
-      morePostsAvailable: false
+      morePostsAvailable: false,
+      tokens: [
+        {
+          icon: dogeCoin,
+          address: '0x0A53f1061522340A2e249DacfD3f45863940D7b4',
+          exchangeAddress: '0x46cAA04e2eeBC6Bdf6f38788DedebF2624bFD308',
+          name: 'Ramona',
+          symbol: 'MONA'
+        }
+      ]
     }
     this.updateState = this.updateState.bind(this)
   }
@@ -37,15 +48,12 @@ class App extends Component {
     this.setState(newState);
   }
 
-  componentDidUpdate() {
-    console.log(this.state)
-  }
 
   render() {
     return (
       <StyledApp>
         <Navbar state={this.state} />
-        <TradeView />
+        <TradeView state={this.state} />
       </StyledApp >
 
     );
