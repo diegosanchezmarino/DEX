@@ -17,7 +17,7 @@ module.exports.deployment = function (accounts) {
 
         before(async () => {
             factory = await Factory.new()
-            token = await Token.new()
+            token = await Token.new("A", "B")
             exchange = await Exchange.new(token.address)
         })
 

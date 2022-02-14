@@ -26,10 +26,10 @@ module.exports.tokenToEthSwap = function (accounts) {
 
 
             factory = await Factory.new()
-            token = await Token.new()
+            token = await Token.new("A", "B")
             exchange = await Exchange.new(token.address)
 
-            await token.transfer(extraAccount1, startingTokenAmount, { from: deployer })
+            await token.getTokens(startingTokenAmount, { from: extraAccount1 })
             //Allow "Exchange" contract to transfer 1000 tokens from "deployer", otherwise "addLiquidity" will fail
             await token.approve(exchange.address, startingTokenAmount, { from: extraAccount1 })
 
@@ -61,7 +61,7 @@ module.exports.tokenToEthSwap = function (accounts) {
             const minEth = 300
 
             assert.isAbove(minEth, ethAmountResult.toNumber(), "the minEths amount is less than the expected")
-            await exchange.tokenToEthSwap(tokensToSell, minEth).should.be.rejectedWith("insufficient output amount")
+            await exchange.tokenToEthSwap(tokensToSell, minEth, { from: extraAccount1 }).should.be.rejectedWith("insufficient output amount")
 
         });
 
@@ -72,7 +72,7 @@ module.exports.tokenToEthSwap = function (accounts) {
             const minEth = 20
 
             await token.approve(exchange.address, tokensToSell, { from: user })
-            await token.transfer(user, tokensToSell, { from: deployer })
+            await token.getTokens(tokensToSell, { from: user })
 
 
             var ethAmountResult = await exchange.getEthAmount(tokensToSell)

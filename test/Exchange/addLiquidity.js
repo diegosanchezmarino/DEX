@@ -17,7 +17,7 @@ module.exports.addLiquidity = function (accounts) {
 
         before(async () => {
             factory = await Factory.new()
-            token = await Token.new()
+            token = await Token.new("A", "B")
             exchange = await Exchange.new(token.address)
 
             await token.approve(exchange.address, 0, { from: user })
@@ -48,10 +48,10 @@ module.exports.addLiquidity = function (accounts) {
 
 
                 factory = await Factory.new()
-                token = await Token.new()
+                token = await Token.new("A", "B")
                 exchange = await Exchange.new(token.address)
 
-                await token.transfer(user, startingTokenAmount, { from: deployer })
+                await token.getTokens(startingTokenAmount, { from: user })
                 //Allow "Exchange" contract to transfer 1000 tokens from "deployer", otherwise "addLiquidity" will fail
                 await token.approve(exchange.address, startingTokenAmount, { from: user })
 
@@ -127,11 +127,11 @@ module.exports.addLiquidity = function (accounts) {
 
 
                 factory = await Factory.new()
-                token = await Token.new()
+                token = await Token.new("A", "B")
                 exchange = await Exchange.new(token.address)
 
-                await token.transfer(extraAccount1, startingTokenAmount, { from: deployer })
-                await token.transfer(user, startingTokenAmount, { from: deployer })
+                await token.getTokens(startingTokenAmount, { from: extraAccount1 })
+                await token.getTokens(startingTokenAmount, { from: user })
 
                 //Allow "Exchange" contract to transfer 1000 tokens from "deployer", otherwise "addLiquidity" will fail
                 await token.approve(exchange.address, startingTokenAmount, { from: extraAccount1 })

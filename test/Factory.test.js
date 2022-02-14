@@ -15,8 +15,8 @@ contract('Factory', ([deployer]) => {
     let factory, token, createExchangeResult, createExchangeEvent, getExchangeResult, tokenToExchangeResult
 
     before(async () => {
-        factory = await Factory.deployed()
-        token = await Token.deployed()
+        factory = await Factory.new()
+        token = await Token.new("A", "B")
         createExchangeResult = await factory.createExchange(token.address);
         createExchangeEvent = createExchangeResult.logs[0].args
         getExchangeResult = await factory.getExchange(token.address);

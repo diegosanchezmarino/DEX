@@ -11,7 +11,7 @@ contract('Token', ([deployer, user]) => {
     let token
 
     before(async () => {
-        token = await Token.deployed()
+        token = await Token.new("A", "B")
     })
 
 
@@ -29,12 +29,12 @@ contract('Token', ([deployer, user]) => {
             const name = await token.name()
             const symbol = await token.symbol()
 
-            assert.equal(name, "Ramona")
-            assert.equal(symbol, "MONA")
+            assert.equal(name, "A")
+            assert.equal(symbol, "B")
         });
     })
 
-    describe.only('getToken', async () => {
+    describe('getTokens', async () => {
 
         let totalSupply, userBalance, updatedTotalSupply, updatedUserBalance
         const tokenToGet = 10000;
@@ -48,7 +48,7 @@ contract('Token', ([deployer, user]) => {
             userBalance = await token.balanceOf(user)
             userBalance = new web3.utils.BN(userBalance)
 
-            await token.getToken(tokenToGet, { from: user })
+            await token.getTokens(tokenToGet, { from: user })
 
             updatedTotalSupply = await token.totalSupply()
             updatedTotalSupply = new web3.utils.BN(updatedTotalSupply)

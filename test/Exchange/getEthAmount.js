@@ -26,10 +26,10 @@ module.exports.getEthAmount = function (accounts) {
 
 
             factory = await Factory.new()
-            token = await Token.new()
+            token = await Token.new("A", "B")
             exchange = await Exchange.new(token.address)
 
-            await token.transfer(extraAccount1, startingTokenAmount, { from: deployer })
+            await token.getTokens(startingTokenAmount, { from: extraAccount1 })
             //Allow "Exchange" contract to transfer 1000 tokens from "deployer", otherwise "addLiquidity" will fail
             await token.approve(exchange.address, startingTokenAmount, { from: extraAccount1 })
 
