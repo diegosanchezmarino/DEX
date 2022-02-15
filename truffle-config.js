@@ -1,5 +1,5 @@
-
-// import { ROPSTEN_PRIVATE_KEY, INFURA_API_KEY, MNENOMIC } from './secrets'
+const { PRIVATE_KEY, INFURA_API_KEY, MNENOMIC } = require('./secrets')
+const HDWalletProvider = require('@truffle/hdwallet-provider');
 
 
 module.exports = {

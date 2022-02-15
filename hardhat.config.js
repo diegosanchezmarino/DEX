@@ -1,4 +1,4 @@
-const { ROPSTEN_PRIVATE_KEY, INFURA_API_KEY } = require('./secrets')
+const { PRIVATE_KEY, INFURA_API_KEY } = require('./secrets')
 
 
 
@@ -16,7 +16,12 @@ module.exports = {
   networks: {
     ropsten: {
       url: `https://ropsten.infura.io/v3/${INFURA_API_KEY}`,
-      accounts: [`${ROPSTEN_PRIVATE_KEY}`]
-    }
+      accounts: [`${PRIVATE_KEY}`]
+    },
+    develop: {
+      url: 'http://127.0.0.1:8545',
+      network_id: "5777", // Match any network id
+      accounts: [`${PRIVATE_KEY}`]
+    },
   }
 };

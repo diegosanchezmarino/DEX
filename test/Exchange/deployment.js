@@ -5,7 +5,7 @@ const Exchange = artifacts.require('./Exchange.sol')
 
 module.exports.deployment = function (accounts) {
 
-    describe('deployment', async () => {
+    describe.only('deployment', async () => {
 
         let factory, exchange, token
         const startingTokenAmount = 1000
@@ -18,7 +18,7 @@ module.exports.deployment = function (accounts) {
         before(async () => {
             factory = await Factory.new()
             token = await Token.new("A", "B")
-            exchange = await Exchange.new(token.address)
+            exchange = await Exchange.new(token.address, "ExchangeName", "ExchangeSymbol")
         })
 
         it('deploys successfully', async () => {
@@ -31,11 +31,17 @@ module.exports.deployment = function (accounts) {
 
         it('name is correct', async () => {
             const exchangeName = await exchange.name()
-            assert.equal(exchangeName, "MyExchange")
+
+            const tokenName = await token.name()
+
+            assert.equal(exchangeName, "ExchangeName")
         })
         it('symbol is correct', async () => {
             const exchangeSymbol = await exchange.symbol()
-            assert.equal(exchangeSymbol, "MEX")
+
+            const tokenSymbol = await token.symbol()
+
+            assert.equal(exchangeSymbol, "ExchangeSymbol")
         })
     })
 }

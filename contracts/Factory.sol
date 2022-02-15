@@ -15,7 +15,18 @@ contract Factory {
             "exchange already exists"
         );
 
-        Exchange exchange = new Exchange(_tokenAddress);
+        ERC20 token = ERC20(_tokenAddress);
+        string memory exchangeName = string(
+            abi.encodePacked(token.name(), " Exchange")
+        );
+        string memory exchangeSmybol = string(
+            abi.encodePacked(token.symbol(), " LP")
+        );
+        Exchange exchange = new Exchange(
+            _tokenAddress,
+            exchangeName,
+            exchangeSmybol
+        );
         tokenToExchange[_tokenAddress] = address(exchange);
 
         emit ExchangeCreated(_tokenAddress, address(exchange));

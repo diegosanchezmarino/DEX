@@ -9,7 +9,11 @@ contract Exchange is ERC20 {
 
     event LiquidityAdded(uint256 sender, uint256 supply, uint256 reserve);
 
-    constructor(address _token) ERC20("MyExchange", "MEX") {
+    constructor(
+        address _token,
+        string memory _name,
+        string memory _symbol
+    ) ERC20(_name, _symbol) {
         require(_token != address(0), "invalid token address");
 
         tokenAddress = _token;
