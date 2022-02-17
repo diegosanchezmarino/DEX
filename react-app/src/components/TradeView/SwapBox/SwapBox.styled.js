@@ -89,13 +89,32 @@ export const CurrencyOutput = styled.div`
 `
 
 export const Loading = styled.div`
-    display: flex;
+    /* display: flex; */
     margin-top: 10px;
     align-items: center;
     justify-content: start;
+    display: ${props => props.visibility ? "flex" : "none"};
+
 
     p {
         color: white;
         margin: 0 0 0 0;
     }
 `
+
+export const SwapButton = styled.button`
+    margin-top: 10px;
+    color: white;
+    padding: 16px;
+    box-sizing: border-box;
+    background-color: rgb(33, 114, 229);
+    font-weight: 500;
+    border-radius: 4px;
+    border: 0px;
+    cursor: pointer;
+
+    display: ${props => props.visibility ? "flex" : "none"};
+
+
+`
+
