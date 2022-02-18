@@ -113,7 +113,7 @@ class SwapBox extends Component {
                     <img src={dogeCoin} alt='outputTokenImage'></img>
                     <p></p>
                 </CurrencyOutput>
-                <Loading visibility={this.state.status === Status.Loading}>
+                <Loading isVisible={this.state.status === Status.Loading}>
                     <p>Loading...</p>
                 </Loading>
                 <SwapButton status={this.state.status} account={this.props.state.account} input={this.state.input.raw} output={this.state.output.raw} />

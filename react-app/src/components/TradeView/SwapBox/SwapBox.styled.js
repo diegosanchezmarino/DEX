@@ -93,7 +93,7 @@ export const Loading = styled.div`
     margin-top: 10px;
     align-items: center;
     justify-content: start;
-    display: ${props => props.visibility ? "flex" : "none"};
+    display: ${props => props.isVisible ? "flex" : "none"};
 
 
     p {

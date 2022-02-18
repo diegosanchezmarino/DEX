@@ -4,12 +4,10 @@ import styled from 'styled-components'
 export const StyledAccountInfo = styled.div`
     flex-direction: row;
     display: flex;
-    margin-top: 15px;
     margin-right: 15px;
-    margin-bottom: 15px;
     border-radius: 14px;
     background-color: black;
-    padding: 1.5px;
+    padding: 2px;
     p {
         color: white;
     }

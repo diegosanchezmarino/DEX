@@ -4,7 +4,6 @@ import styled from 'styled-components'
 export const StyledMainButton = styled.button`
     background-color: rgba(21, 61, 111, 0.44);
     color: rgb(80, 144, 234);
-    margin-top: 15px;
     margin-right: 15px;
     margin-bottom: 15px;
     border-radius: 14px;
