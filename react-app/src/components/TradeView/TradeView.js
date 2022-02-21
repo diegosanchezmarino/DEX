@@ -1,17 +1,22 @@
 
 import React, { Component } from 'react';
+import { Tabs } from '../Navbar/ViewSelector/ViewSelector';
 import SwapBox from './SwapBox/SwapBox';
 import { StyledTradeView } from './TradeView.styled';
 
-class TradeView extends Component {
+export function TradeView(props) {
 
-    render() {
+
+    if (props.state.currentTab === Tabs.Swap) {
         return (
             <StyledTradeView>
-                <SwapBox state={this.props.state} />
+                <SwapBox state={props.state} />
             </StyledTradeView>
         );
     }
+    else {
+        return null
+    }
+
 
 }
-export default TradeView;

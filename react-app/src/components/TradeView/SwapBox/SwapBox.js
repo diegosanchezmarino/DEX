@@ -4,9 +4,11 @@ import { StyledSwapBox, CurrencyInput, CurrencyOutput, Loading } from './SwapBox
 import etherCoin from '../../../assets/ethereum.png'
 import dogeCoin from '../../../assets/dogecoin.jpeg'
 import { MetamaskStatus } from '../../../App';
-import { getAddressBalance, getTokenAmount } from '../../../api/BlockchainApi.js';
+import { getAddressBalance } from '../../../api/FactoryApi.js';
 import SwapButton from './SwapButton/SwapButton';
 import web3 from 'web3';
+import { validateInput } from '../../../utilities/UtilsFunctions';
+import { getTokenAmount } from '../../../api/ExchangeApi';
 
 export const Status = {
     Loading: 1,
@@ -25,28 +27,9 @@ class SwapBox extends Component {
             status: Status.Empty
         }
     }
-
-
-
-    validateInput(value) {
-
-        var res = value.split(".");
-        let result = false
-
-        if (res.length === 1 && value > 0) {
-            return true
-        }
-        else if (res.length === 2 && res[1].length < 19 && value > 0) {
-            return true
-        }
-
-        return result
-
-    }
-
     inputChanged(value) {
 
-        const inputIsCorrect = this.validateInput(value)
+        const inputIsCorrect = validateInput(value)
         if (inputIsCorrect) {
 
             const weiValue = new web3.utils.toBN(web3.utils.toWei(value.toString(), 'ether'))

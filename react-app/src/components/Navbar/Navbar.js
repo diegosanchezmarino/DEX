@@ -13,7 +13,7 @@ class Navbar extends Component {
                 <LeftStack>
                 </LeftStack>
                 <CenterStack>
-                    <ViewSelector />
+                    <ViewSelector state={this.props.state} changeTab={this.props.changeTab} />
                 </CenterStack>
                 <RightStack >
                     <MainButton state={this.props.state} />

@@ -1,12 +1,13 @@
 
 import React, { Component } from 'react';
 
-import TradeView from './components/TradeView/TradeView';
+import { TradeView } from './components/TradeView/TradeView';
 import { StyledApp } from './App.styled';
 import Navbar from './components/Navbar/Navbar';
 import { BlockchainConnectionManager } from './utilities/BlockchainConnectionManager';
 import dogeCoin from './assets/dogecoin.jpeg'
-
+import { FaucetView } from './components/FaucetView/FaucetView';
+import { Tabs } from './components/Navbar/ViewSelector/ViewSelector';
 
 export const MetamaskStatus = {
   Idle: 0,
@@ -24,18 +25,11 @@ class App extends Component {
     this.state = {
       account: '',
       metamaskStatus: MetamaskStatus.Idle,
-      morePostsAvailable: false,
-      tokens: [
-        {
-          icon: dogeCoin,
-          address: '0x0A53f1061522340A2e249DacfD3f45863940D7b4',
-          exchangeAddress: '0x46cAA04e2eeBC6Bdf6f38788DedebF2624bFD308',
-          name: 'Ramona',
-          symbol: 'MONA'
-        }
-      ]
+      currentTab: Tabs.Swap
     }
+
     this.updateState = this.updateState.bind(this)
+    this.changeTab = this.changeTab.bind(this)
   }
 
   async componentDidMount() {
@@ -48,12 +42,17 @@ class App extends Component {
     this.setState(newState);
   }
 
+  changeTab(newTab) {
+    this.setState({ currentTab: newTab })
+  }
+
 
   render() {
     return (
       <StyledApp>
-        <Navbar state={this.state} />
+        <Navbar changeTab={this.changeTab} state={this.state} />
         <TradeView state={this.state} />
+        <FaucetView state={this.state} />
       </StyledApp >
 
     );

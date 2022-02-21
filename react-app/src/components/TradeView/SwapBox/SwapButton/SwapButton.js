@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { DisabledText, EnabledButton } from './SwapButton.styled';
 import { Status } from '../SwapBox';
-import { swapEthForToken } from '../../../../api/BlockchainApi';
+import { swapEthForToken } from '../../../../api/ExchangeApi';
 
 class SwapButton extends Component {
 
